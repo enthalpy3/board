@@ -19,6 +19,7 @@
             </tr>
             <tr>
                 <td colspan=2><input type="submit" value="로그인" /></td>
+                <td colspan=2><input type="submit" value="로그인" /></td>
             </tr>
         </table>
         <a href="<%=request.getContextPath()%>/user/register_form.jsp">회원가입</a>

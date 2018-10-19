@@ -1,7 +1,8 @@
+<%@page import="member.MemberInfo"%>
+<%@page import="board.BoardInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="true"%>
-<%@ page import="member.MemberInfo"%>
 <%
 	request.setCharacterEncoding("utf-8");
 %>
@@ -9,7 +10,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>회원정보</title>
+<title>게시글</title>
 </head>
 <body>
 	<jsp:useBean id="data" class="member.DataManager" scope="page" />
@@ -18,32 +19,26 @@
 		String rPath = request.getContextPath();
 		if (id != null) {
 			MemberInfo member = data.getMember(id);
-			out.print("<form action=\"" + rPath + "/user/update.jsp\" method=\"post\">");
+			out.print("<form action=\"" + rPath + "/user/board_update.jsp\" method=\"post\">");
 			out.print("<table>");
-			out.print("<tr><th colspan=2>회원정보</th></tr>");
-			out.print("<tr><td>아이디</td><td><input type=\"text\" name=\"id\" value=\"" + member.getId()
-					+ "\"></td></tr>");
-			out.print("<tr><td>비밀번호</td><td><input type=\"password\" name=\"pass\" value=\"" + member.getPass()
-					+ "\"></td></tr>");
+			out.print("<tr><th colspan=2>게시글</th></tr>");
 			out.print("<tr><td>닉네임</td><td><input type=\"text\" name=\"nick\" value=\"" + member.getNick()
 					+ "\"></td></tr>");
-			out.print("<tr><td>이름</td><td><input type=\"text\" name=\"name\" value=\"" + member.getName()
+			out.print("<tr><td>제목</td><td><input type=\"text\" name=\"title\" value=\"" + member.getTitle()
 					+ "\"></td></tr>");
-			out.print("<tr><td>전화번호</td><td><input type=\"text\" name=\"phone\" value=\"" + member.getPhone()
+			out.print("<tr><td>내용</td><td><input type=\"text\" name=\"text\" value=\"" + member.getText()
 					+ "\"></td></tr>");
-			out.print("<tr><td>이메일</td><td><input type=\"text\" name=\"email\" value=\"" + member.getEmail()
-					+ "\"></tr>");
-			out.print("<tr><td>가입날짜</td><td>" + member.getReg_date() + "</td></tr>");
+			out.print("<tr><td>작성날짜</td><td>" + member.getReg_date() + "</td></tr>");
 			out.print("<tr><td solspan=2><input type=\"submit\" value=\"수정\"></td></tr>");
 			out.print("</table>");
 			out.print("</form>");
 		} else {
-			response.sendRedirect(rPath + "/index.jsp");
+			response.sendRedirect(rPath + "/my_list.jsp");
 		}
 	%>
 	<a href="<%=request.getContextPath()%>/user/logout.jsp">로그아웃</a>
 	<br />
-	<a href="<%=request.getContextPath()%>/user/delete.jsp?=<%=id%>">회원탈퇴</a>
+	<a href="<%=request.getContextPath()%>/user/board_delete.jsp?=<%=id%>">글삭제</a>
 	<br />
 	<a href="<%=request.getContextPath()%>/user/board_form.jsp">글쓰기</a>
 	<br />

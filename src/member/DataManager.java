@@ -11,7 +11,7 @@ public class DataManager {
     //String url = "jdbc:mysql://localhost:3306/my_site?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
     String url = "jdbc:mysql://localhost:3306/my_site";
     String user = "jsp_user";
-    String pass = "qwer1234";
+    String pass = "zxcv1234";
 
     private Connection openConnection() {
         try {
@@ -40,18 +40,19 @@ public class DataManager {
      */
     public int insertMember(MemberInfo member) {
         PreparedStatement pstmt = null;
-        String query = "INSERT INTO member VALUES(?,?,?,?,?,?)";
+        String query = "INSERT INTO member VALUES(?,?,?,?,?,?,?)";
         int res = 0;
         openConnection();
         try {
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, member.getId());
             pstmt.setString(2, member.getPass());
-            pstmt.setString(3, member.getName());
-            pstmt.setString(4, member.getPhone());
-            pstmt.setString(5, member.getEmail());
+            pstmt.setString(3, member.getNick());
+            pstmt.setString(4, member.getName());
+            pstmt.setString(5, member.getPhone());
+            pstmt.setString(6, member.getEmail());
             Timestamp ts = new Timestamp(System.currentTimeMillis());
-            pstmt.setTimestamp(6, ts);
+            pstmt.setTimestamp(7, ts);
             res = pstmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,7 +71,8 @@ public class DataManager {
         int res = 0;
         openConnection();
         try {
-            pstmt = con.prepareCall(query);
+        	pstmt = con.prepareStatement(query);
+        	//pstmt = con.prepareCall(query);
             pstmt.setString(1, id);
             res = pstmt.executeUpdate();
         } catch (Exception e) {
@@ -86,16 +88,17 @@ public class DataManager {
      */
     public int updateMember(MemberInfo member) {
         PreparedStatement pstmt = null;
-        String query = "UPDATE member SET pass=?, name=?, phone=?, email=? WHERE id=?";
+        String query = "UPDATE member SET pass=?,nick=?, name=?, phone=?, email=? WHERE id=?";
         int res = 0;
         openConnection();
         try {
             pstmt = con.prepareStatement(query);
             pstmt.setString(1, member.getPass());
-            pstmt.setString(2, member.getName());
-            pstmt.setString(3, member.getPhone());
-            pstmt.setString(4, member.getEmail());
-            pstmt.setString(5, member.getId());
+            pstmt.setString(2, member.getPass());
+            pstmt.setString(3, member.getName());
+            pstmt.setString(4, member.getPhone());
+            pstmt.setString(5, member.getEmail());
+            pstmt.setString(6, member.getId());
             res = pstmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,6 +146,7 @@ public class DataManager {
             rs.next();
             member.setId(rs.getString("id"));
             member.setPass(rs.getString("pass"));
+            member.setNick(rs.getString("nick"));
             member.setName(rs.getString("name"));
             member.setPhone(rs.getString("phone"));
             member.setEmail(rs.getString("email"));
